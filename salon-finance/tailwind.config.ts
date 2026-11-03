@@ -1,0 +1,106 @@
+import type { Config } from "tailwindcss";
+
+export default {
+  content: ["./index.html", "./src/**/*.{ts,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        canvas: "#f4efe7",
+        surface: "#fffcf7",
+        ink: {
+          50: "#f7f4f0",
+          100: "#eee8e0",
+          200: "#ddd3c7",
+          300: "#c5b6a5",
+          400: "#a5907c",
+          500: "#8a7462",
+          600: "#715d4d",
+          700: "#5b4a3e",
+          800: "#41342c",
+          900: "#2a211c",
+        },
+        wine: {
+          50: "#fbf3f4",
+          100: "#f5e2e6",
+          200: "#ecc7cf",
+          300: "#dda0ad",
+          400: "#c86f83",
+          500: "#ae4a62",
+          600: "#94364f",
+          700: "#7a2b41",
+          800: "#5c2233",
+          900: "#3c1622",
+          950: "#260d15",
+        },
+        brass: {
+          50: "#fbf6ec",
+          100: "#f5e9d3",
+          200: "#ecd3a8",
+          300: "#dfb577",
+          400: "#d09a51",
+          500: "#b98545",
+          600: "#9a6837",
+          700: "#7c512e",
+          800: "#66432a",
+          900: "#563a26",
+        },
+        sage: {
+          50: "#f0f6f1",
+          100: "#dcebdf",
+          200: "#bcd8c3",
+          300: "#92bd9d",
+          400: "#679d77",
+          500: "#4a7f5b",
+          600: "#3a6549",
+          700: "#30513c",
+          800: "#294132",
+          900: "#23362a",
+        },
+        danger: {
+          50: "#fdf3f1",
+          100: "#fae3df",
+          200: "#f4c7bf",
+          300: "#eaa094",
+          400: "#dd6f5f",
+          500: "#c94d3c",
+          600: "#ad3a2c",
+          700: "#902f25",
+          800: "#782b24",
+          900: "#652822",
+        },
+      },
+      fontFamily: {
+        sans: ["Manrope Variable", "Manrope", "system-ui", "sans-serif"],
+        display: ["Newsreader Variable", "Newsreader", "Georgia", "serif"],
+      },
+      boxShadow: {
+        card: "0 1px 2px rgba(42, 33, 28, 0.04), 0 12px 28px -18px rgba(42, 33, 28, 0.28)",
+        lift: "0 24px 48px -24px rgba(42, 33, 28, 0.35)",
+        sidebar: "12px 0 40px -28px rgba(38, 13, 21, 0.65)",
+      },
+      borderRadius: {
+        xl2: "1.125rem",
+      },
+      keyframes: {
+        "fade-up": {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "200% 0" },
+          "100%": { backgroundPosition: "-200% 0" },
+        },
+      },
+      animation: {
+        "fade-up": "fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "fade-in": "fade-in 0.25s ease-out both",
+        shimmer: "shimmer 1.6s linear infinite",
+      },
+    },
+  },
+  plugins: [],
+} satisfies Config;

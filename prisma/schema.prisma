@@ -1,0 +1,153 @@
+// Skema database Sistem Peminjaman Ruangan - IDB Bali
+// PostgreSQL + Prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  PEMOHON
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum NotificationType {
+  BOOKING_CREATED
+  BOOKING_APPROVED
+  BOOKING_REJECTED
+  BOOKING_CANCELLED
+  BOOKING_UPDATED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(PEMOHON)
+  // Akun yang tidak lagi diizinkan dapat dinonaktifkan tanpa menghapus riwayat.
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt    DateTime @updatedAt @db.Timestamptz(6)
+
+  bookings         Booking[]      @relation("UserBookings")
+  approvedBookings Booking[]      @relation("ApprovedBy")
+  notifications    Notification[]
+  scheduleBlocks   RoomScheduleBlock[]
+  auditLogs        AuditLog[]
+
+  @@index([role])
+}
+
+model Room {
+  id          String   @id @default(cuid())
+  name        String
+  building    String
+  floor       Int
+  capacity    Int
+  // Kategori tampilan katalog: Studio, Laboratorium, Ruang Kelas, Aula & Pertemuan, Galeri.
+  category    String?
+  // Foto ruangan (path di /public atau URL absolut). Null = belum ada foto.
+  imageUrl    String?
+  facilities  String[]  @default([])
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(6)
+
+  bookings Booking[]
+  blocks   RoomScheduleBlock[]
+
+  @@unique([building, name], name: "room_building_name_key")
+  @@index([isActive])
+}
+
+model Booking {
+  id               String        @id @default(cuid())
+  bookingCode      String        @unique
+  userId           String
+  roomId           String
+  startAt          DateTime      @db.Timestamptz(6)
+  endAt            DateTime      @db.Timestamptz(6)
+  activityName     String
+  participantCount Int
+  purpose          String
+  status           BookingStatus @default(PENDING)
+  rejectionReason  String?
+  approvedBy       String?
+  approvedAt       DateTime?     @db.Timestamptz(6)
+  cancelledAt      DateTime?     @db.Timestamptz(6)
+  createdAt        DateTime      @default(now()) @db.Timestamptz(6)
+  updatedAt        DateTime      @updatedAt @db.Timestamptz(6)
+
+  user       User           @relation("UserBookings", fields: [userId], references: [id], onDelete: Restrict)
+  room       Room           @relation(fields: [roomId], references: [id], onDelete: Restrict)
+  approver   User?          @relation("ApprovedBy", fields: [approvedBy], references: [id], onDelete: SetNull)
+  notifications Notification[]
+
+  @@index([roomId, startAt, endAt])
+  @@index([userId, createdAt])
+  @@index([status, startAt])
+}
+
+// Blokir jadwal manual / jadwal kuliah (struktur siap untuk integrasi akademik)
+model RoomScheduleBlock {
+  id         String   @id @default(cuid())
+  roomId     String
+  startAt    DateTime @db.Timestamptz(6)
+  endAt      DateTime @db.Timestamptz(6)
+  reason     String
+  // Sumber blokir: MANUAL / ACADEMIC_SCHEDULE (integrasi masa depan)
+  source     String   @default("MANUAL")
+  createdById String?
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
+
+  room      Room  @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  createdBy User? @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([roomId, startAt, endAt])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  bookingId String?
+  type      NotificationType
+  title     String
+  message   String
+  isRead    Boolean          @default(false)
+  // Status pengiriman email: PENDING / SENT / SKIPPED / FAILED
+  emailStatus String         @default("PENDING")
+  createdAt DateTime         @default(now()) @db.Timestamptz(6)
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  booking Booking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+
+  @@index([userId, isRead, createdAt])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  action    String
+  entity    String
+  entityId  String?
+  metadata  Json?
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+
+  actor User? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([entity, entityId])
+  @@index([createdAt])
+}

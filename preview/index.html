@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pratinjau — Sistem Peminjaman Ruangan IDB Bali</title>
+<meta name="description" content="Pratinjau statis antarmuka Sistem Peminjaman Ruangan IDB Bali: login, dashboard, katalog ruangan, kalender ketersediaan, dan riwayat pengajuan." />
+<meta property="og:title" content="Pratinjau — Sistem Peminjaman Ruangan IDB Bali" />
+<meta property="og:description" content="Tiruan antarmuka aplikasi dengan data contoh. Login dan penyimpanan data tidak berjalan pada pratinjau statis ini." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="assets/mark.png" />
+<style>
+  :root {
+    --brand-900: #012f46; --brand-800: #023e5c; --brand-700: #024d71; --brand-600: #0c5d80;
+    --brand-500: #1e7096; --brand-100: #d6e9f5; --brand-50: #eef6fb;
+    --accent: #f17711; --accent-50: #fff4ea;
+    --ink-900: #101820; --ink-800: #1c2732; --ink-700: #33404d; --ink-600: #4d5a67; --ink-500: #6b7885; --ink-400: #98a3ae;
+    --line: #e3e8ee; --line-soft: #eef1f5; --canvas: #f6f8fa;
+    --green-bg: #ecfdf5; --green-fg: #065f46; --green-ring: #a7f3d0;
+    --amber-bg: #fffbeb; --amber-fg: #92400e; --amber-ring: #fde68a;
+    --rose-bg: #fff1f2; --rose-fg: #9f1239; --rose-ring: #fecdd3;
+    --stone-bg: #f5f5f4; --stone-fg: #44403c; --stone-ring: #e7e5e4;
+    --radius: 16px;
+    --shadow: 0 1px 2px rgba(16,24,32,.04), 0 12px 30px -18px rgba(16,24,32,.18);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--canvas); color: var(--ink-900);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.55; -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  button { font: inherit; cursor: pointer; }
+  a { color: inherit; }
+  .hidden { display: none !important; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+  /* ---------- banner pratinjau ---------- */
+  .preview-note {
+    background: #fff8ed; color: #7a3d02; border-bottom: 1px solid #ffdfbc;
+    font-size: .78rem; padding: .45rem 1rem; text-align: center;
+  }
+  .preview-note strong { font-weight: 700; }
+
+  /* ---------- login ---------- */
+  .login { min-height: calc(100dvh - 34px); display: flex; flex-direction: column; background: #fff; }
+  .brandbar { height: 56px; display: flex; align-items: center; justify-content: center; background: var(--brand-700); flex: none; }
+
+  .login-grid { flex: 1; display: grid; grid-template-columns: 1.55fr 1fr; min-height: 0; }
+  .hero-photo { position: relative; overflow: hidden; background: var(--brand-900); }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+  .hero-photo .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(1,47,70,.92), rgba(1,47,70,.18) 55%, rgba(1,47,70,.05)); }
+  .hero-photo .scrim-left { position: absolute; inset: 0 auto 0 0; width: 32%; background: linear-gradient(to right, rgba(1,47,70,.4), transparent); }
+  .hero-photo .caption { position: absolute; inset: auto 0 0 0; padding: 2rem; display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; color: #fff; }
+  .hero-photo .caption .kicker { font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.72); margin: 0; }
+  .hero-photo .caption .name { margin: .25rem 0 0; font-size: 1rem; font-weight: 500; }
+  .hero-photo .caption .bar { width: 48px; height: 4px; border-radius: 99px; background: var(--accent); margin-bottom: 4px; }
+
+  .login-panel { position: relative; background: #fff; display: flex; flex-direction: column; padding: 2rem; }
+  .login-panel::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(2,77,113,.09) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .login-inner { position: relative; margin: auto; width: 100%; max-width: 360px; }
+  .login-brand { text-align: center; display: grid; justify-items: center; gap: .35rem; }
+  .login-brand img { width: 64px; height: 64px; }
+  .login-brand h1 { font-size: 1.22rem; margin: .35rem 0 0; letter-spacing: -.01em; }
+  .login-brand p { margin: 0; color: var(--accent); font-style: italic; font-size: .88rem; }
+  .mobile-hero { display: none; }
+
+  form.login-form { margin-top: 1.6rem; display: grid; gap: .95rem; }
+  .field { display: grid; gap: .35rem; }
+  .field label { font-size: .82rem; font-weight: 600; color: var(--ink-800); }
+  .field label span { color: #e11d48; }
+  .control { position: relative; }
+  .control svg { position: absolute; left: .75rem; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--ink-400); }
+  .control input {
+    width: 100%; height: 44px; border: 1px solid #d2dae3; border-radius: 7px;
+    background: rgba(248,250,252,.7); padding: 0 .85rem 0 2.4rem; font-size: .9rem; color: var(--ink-900);
+  }
+  .control input:focus { outline: none; border-color: var(--brand-500); box-shadow: 0 0 0 3px var(--brand-100); }
+  .control .eye { position: absolute; right: 0; top: 0; height: 44px; width: 40px; border: 0; background: none; color: var(--ink-400); display: grid; place-items: center; }
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-top: .25rem; }
+  .btn { height: 44px; border: 0; border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; gap: .45rem; font-size: .88rem; font-weight: 600; text-decoration: none; }
+  .btn svg { width: 16px; height: 16px; }
+  .btn-help { background: #059669; color: #fff; }
+  .btn-help:hover { background: #047857; }
+  .btn-login { background: var(--brand-600); color: #fff; }
+  .btn-login:hover { background: var(--brand-700); }
+  .form-error { display: none; background: var(--rose-bg); border: 1px solid var(--rose-ring); color: var(--rose-fg); border-radius: 8px; padding: .6rem .75rem; font-size: .82rem; }
+  .form-error.show { display: block; }
+  .demo-box { border: 1px dashed #d2dae3; background: #fbfcfd; border-radius: 8px; padding: .65rem .75rem; font-size: .76rem; }
+  .demo-box b { display: block; margin-bottom: .35rem; color: var(--ink-800); }
+  .demo-box button { border: 0; background: none; padding: 0; color: var(--brand-700); text-align: left; font-size: .76rem; }
+  .demo-box button:hover { text-decoration: underline; }
+  .login-foot { margin-top: 1.4rem; border-top: 1px solid var(--line); padding-top: 1rem; text-align: center; color: var(--ink-500); font-size: .7rem; }
+  .login-foot p { margin: .2rem 0; }
+
+  /* ---------- app shell ---------- */
+  .app { min-height: calc(100dvh - 34px); display: flex; flex-direction: column; }
+  .app-header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.95); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+  .app-header .row { max-width: 1120px; margin: 0 auto; height: 64px; padding: 0 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .app-brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; }
+  .app-brand img { width: 36px; height: 36px; }
+  .app-brand .t1 { font-size: .86rem; font-weight: 700; line-height: 1.2; }
+  .app-brand .t2 { font-size: .68rem; color: var(--ink-500); }
+  .app-nav { display: flex; gap: .25rem; }
+  .app-nav button {
+    border: 0; background: none; color: var(--ink-600); font-size: .84rem; font-weight: 500;
+    padding: .5rem .7rem; border-radius: 8px; display: inline-flex; align-items: center; gap: .4rem;
+  }
+  .app-nav button:hover { background: #eef1f5; color: var(--ink-900); }
+  .app-nav button.active { background: var(--brand-50); color: var(--brand-800); }
+  .app-nav svg { width: 15px; height: 15px; }
+  .app-user { display: flex; align-items: center; gap: .6rem; }
+  .bell { position: relative; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--line); background: #fff; display: grid; place-items: center; color: var(--ink-700); }
+  .bell .dot { position: absolute; top: -5px; right: -5px; background: var(--accent); color: #fff; font-size: .6rem; font-weight: 700; min-width: 17px; height: 17px; border-radius: 99px; display: grid; place-items: center; padding: 0 3px; }
+  .user-chip { display: flex; align-items: center; gap: .45rem; border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: .3rem .55rem; font-size: .82rem; font-weight: 600; }
+  .avatar { width: 22px; height: 22px; border-radius: 50%; background: #e3e8ee; display: grid; place-items: center; font-size: .7rem; font-weight: 700; color: var(--ink-700); }
+  .logout { border: 1px solid var(--line); background: #fff; border-radius: 10px; height: 38px; padding: 0 .65rem; font-size: .78rem; color: var(--ink-700); display: inline-flex; align-items: center; gap: .35rem; }
+  .app-main { flex: 1; width: 100%; max-width: 1120px; margin: 0 auto; padding: 1.75rem 1.25rem 5.5rem; }
+
+  .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .page-head h2 { margin: 0; font-size: 1.5rem; letter-spacing: -.015em; }
+  .page-head .sub { margin: .2rem 0 0; color: var(--ink-500); font-size: .84rem; }
+  .btn-primary-sm { height: 40px; padding: 0 .9rem; border-radius: 10px; background: var(--brand-700); color: #fff; border: 0; font-size: .82rem; font-weight: 600; display: inline-flex; align-items: center; gap: .4rem; }
+  .btn-outline-sm { height: 40px; padding: 0 .9rem; border-radius: 10px; background: #fff; color: var(--ink-700); border: 1px solid var(--line); font-size: .82rem; font-weight: 600; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; }
+  .stat { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1rem; box-shadow: var(--shadow); }
+  .stat .label { font-size: .78rem; color: var(--ink-500); }
+  .stat .value { font-size: 1.5rem; font-weight: 650; margin-top: .15rem; font-variant-numeric: tabular-nums; }
+  .stat .ico { float: right; width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: var(--brand-50); color: var(--brand-700); }
+  .stat.amber .ico { background: var(--amber-bg); color: var(--amber-fg); }
+  .stat.rose .ico { background: var(--rose-bg); color: var(--rose-fg); }
+  .stat.stone .ico { background: var(--stone-bg); color: var(--stone-fg); }
+
+  .alert { display: flex; gap: .6rem; align-items: flex-start; border: 1px solid #bae6fd; background: #f0f9ff; color: #075985; border-radius: 12px; padding: .75rem .9rem; font-size: .82rem; margin: 1rem 0; }
+  .alert svg { flex: none; width: 16px; height: 16px; margin-top: .1rem; }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+  .card-head { padding: .85rem 1.1rem; border-bottom: 1px solid var(--line-soft); display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+  .card-head h3 { margin: 0; font-size: .9rem; }
+  .card-head p { margin: .1rem 0 0; font-size: .74rem; color: var(--ink-500); }
+  .link { color: var(--brand-700); font-size: .78rem; font-weight: 600; text-decoration: none; }
+  .list { list-style: none; margin: 0; padding: 0; }
+  .list li { padding: .7rem 1.1rem; border-bottom: 1px solid var(--line-soft); display: flex; justify-content: space-between; gap: .75rem; align-items: flex-start; }
+  .list li:last-child { border-bottom: 0; }
+  .list .title { font-size: .84rem; font-weight: 600; }
+  .list .meta { font-size: .73rem; color: var(--ink-500); margin-top: .1rem; }
+
+  .badge { display: inline-flex; align-items: center; gap: .3rem; border: 1px solid; border-radius: 99px; padding: .15rem .5rem; font-size: .68rem; font-weight: 600; white-space: nowrap; }
+  .badge::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+  .b-approved { background: var(--green-bg); color: var(--green-fg); border-color: var(--green-ring); }
+  .b-pending { background: var(--amber-bg); color: var(--amber-fg); border-color: var(--amber-ring); }
+  .b-rejected { background: var(--rose-bg); color: var(--rose-fg); border-color: var(--rose-ring); }
+  .b-cancelled { background: var(--stone-bg); color: var(--stone-fg); border-color: var(--stone-ring); }
+
+  .room-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; }
+  .room { background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
+  .room .head { padding: .8rem 1rem; border-bottom: 1px solid var(--line-soft); display: flex; justify-content: space-between; gap: .5rem; align-items: flex-start; }
+  .room h3 { margin: 0; font-size: .88rem; }
+  .room .loc { font-size: .72rem; color: var(--ink-500); margin-top: .1rem; }
+  .room .body { padding: .8rem 1rem; display: grid; gap: .55rem; }
+  .room .facts { font-size: .74rem; color: var(--ink-600); display: flex; gap: 1rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: .3rem; }
+  .chip { background: #eef1f5; color: var(--ink-600); border-radius: 6px; padding: .15rem .4rem; font-size: .66rem; font-weight: 600; }
+  .room .foot { border-top: 1px solid var(--line-soft); padding: .6rem 1rem; font-size: .76rem; font-weight: 600; color: var(--brand-700); }
+  .room .thumb { position: relative; aspect-ratio: 16 / 10; background: var(--brand-900); overflow: hidden; }
+  .room .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .room:hover { border-color: var(--brand-600); }
+  .room:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+  .modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 1rem; background: rgba(1, 47, 70, .58); }
+  .modal.hidden { display: none; }
+  .modal-card { position: relative; width: min(560px, 100%); max-height: 90vh; overflow: auto; background: #fff; border-radius: 16px; box-shadow: 0 24px 60px rgba(1, 47, 70, .35); }
+  .modal-card > img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; background: var(--brand-900); }
+  .modal-close { position: absolute; top: .6rem; right: .6rem; width: 34px; height: 34px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .95); color: var(--ink-800); font-size: 1.15rem; line-height: 1; cursor: pointer; box-shadow: 0 1px 4px rgba(1, 47, 70, .2); }
+  .modal-body { padding: 1rem 1.15rem 1.2rem; }
+  .modal-body h3 { margin: .3rem 0 0; font-size: 1.15rem; }
+  .modal-body .loc { margin: .15rem 0 0; font-size: .76rem; color: var(--ink-500); }
+  .modal-facts { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; margin: .9rem 0 0; }
+  .modal-facts > div { border-radius: 9px; background: #f5f7f9; padding: .5rem .65rem; }
+  .modal-facts dt { margin: 0; font-size: .6rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-500); }
+  .modal-facts dd { margin: .15rem 0 0; font-size: .8rem; font-weight: 600; color: var(--ink-900); }
+  .modal-fac { margin-top: .9rem; }
+  .modal-fac p { margin: 0 0 .35rem; font-size: .6rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-500); }
+  .modal-note { margin: .9rem 0 0; font-size: .68rem; line-height: 1.5; color: var(--ink-500); }
+  .room .cat { display: inline-block; margin-bottom: .15rem; padding: .1rem .35rem; border-radius: 5px; background: #eef1f5; color: var(--ink-600); font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; }
+
+  .cal-toolbar { display: flex; align-items: center; justify-content: space-between; gap: .75rem; flex-wrap: wrap; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: .75rem .9rem; box-shadow: var(--shadow); }
+  .cal-date { display: inline-flex; align-items: center; gap: .5rem; border: 1px solid var(--line); border-radius: 9px; padding: .4rem .65rem; font-size: .8rem; font-weight: 600; }
+  .cal-date svg { width: 15px; height: 15px; color: var(--ink-500); }
+  .legend { display: flex; gap: .4rem; flex-wrap: wrap; margin: .8rem 0; align-items: center; }
+  .legend span { font-size: .7rem; font-weight: 600; border-radius: 5px; padding: .2rem .45rem; border: 1px solid; }
+  .legend .ok { background: var(--green-bg); color: var(--green-fg); border-color: var(--green-ring); }
+  .legend .pending { background: var(--amber-bg); color: var(--amber-fg); border-color: var(--amber-ring); }
+  .legend .busy { background: var(--rose-bg); color: var(--rose-fg); border-color: var(--rose-ring); }
+  .legend .blocked { background: #e7e5e4; color: #44403c; border-color: #d6d3d1; }
+  .legend .note { border: 0; background: none; color: var(--ink-500); font-weight: 500; }
+
+  .cal-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: #fff; box-shadow: var(--shadow); }
+  table.cal { border-collapse: collapse; width: 100%; min-width: 880px; font-size: .78rem; }
+  .cal th, .cal td { border-bottom: 1px solid var(--line-soft); padding: .3rem; }
+  .cal thead th { font-size: .66rem; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-500); font-weight: 700; background: #fbfcfd; padding: .55rem .3rem; text-align: center; }
+  .cal thead th:first-child { text-align: left; padding-left: .9rem; width: 160px; }
+  .cal tbody th { text-align: left; padding-left: .9rem; font-weight: 600; font-size: .78rem; white-space: nowrap; background: #fff; }
+  .cal tbody th small { display: block; font-weight: 400; font-size: .66rem; color: var(--ink-500); }
+  .cell { height: 28px; border-radius: 5px; border: 1px solid; }
+  .cell.ok { background: var(--green-bg); border-color: var(--green-ring); }
+  .cell.pending { background: var(--amber-bg); border-color: var(--amber-ring); }
+  .cell.busy { background: var(--rose-bg); border-color: var(--rose-ring); }
+  .cell.blocked { background: #e7e5e4; border-color: #d6d3d1; }
+
+  table.data { width: 100%; border-collapse: collapse; font-size: .8rem; min-width: 720px; }
+  .data thead th { text-align: left; font-size: .66rem; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-500); background: #fbfcfd; padding: .6rem .8rem; border-bottom: 1px solid var(--line); }
+  .data tbody td { padding: .65rem .8rem; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  .data tbody tr:last-child td { border-bottom: 0; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .72rem; color: var(--ink-600); }
+  .scroll-x { overflow-x: auto; }
+
+  .app-footer { border-top: 1px solid var(--line); background: #fff; padding: 1rem 1.25rem; color: var(--ink-500); font-size: .72rem; text-align: center; }
+
+  @media (max-width: 960px) {
+    .login-grid { grid-template-columns: 1fr; }
+    .hero-photo { display: none; }
+    .mobile-hero { display: block; height: 170px; position: relative; overflow: hidden; background: var(--brand-900); }
+    .mobile-hero img { width: 100%; height: 100%; object-fit: cover; }
+    .mobile-hero .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(1,47,70,.85), rgba(1,47,70,.15)); }
+    .mobile-hero p { position: absolute; left: 1rem; bottom: .7rem; margin: 0; color: rgba(255,255,255,.9); font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; }
+    .app-nav { display: none; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .cols { grid-template-columns: 1fr; }
+    .room-grid { grid-template-columns: 1fr 1fr; }
+    .app-main { padding-bottom: 6.5rem; }
+    .mobile-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: rgba(255,255,255,.97); border-top: 1px solid var(--line); display: flex; padding: .35rem .5rem; }
+    .mobile-nav button { flex: 1; border: 0; background: none; display: grid; justify-items: center; gap: .2rem; font-size: .64rem; font-weight: 600; color: var(--ink-500); padding: .3rem 0; }
+    .mobile-nav button.active { color: var(--brand-800); }
+    .mobile-nav svg { width: 18px; height: 18px; }
+    .logout span { display: none; }
+  }
+  @media (min-width: 961px) { .mobile-nav { display: none; } }
+  @media (max-width: 600px) {
+    .room-grid { grid-template-columns: 1fr; }
+    .login-panel { padding: 1.5rem 1.25rem 2.5rem; }
+    .page-head h2 { font-size: 1.25rem; }
+    .stat .value { font-size: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="preview-note">
+  <strong>Pratinjau statis</strong> — tampilan aplikasi dengan data contoh. Login, penyimpanan, dan pembuatan pengajuan tidak berjalan di halaman ini.
+</div>
+
+<!-- ============================ LOGIN ============================ -->
+<section id="screen-login" class="login">
+  <div class="brandbar" aria-hidden="true"></div>
+
+  <div class="login-grid">
+    <div class="hero-photo" aria-hidden="true">
+      <img src="assets/hero.jpg" alt="" />
+      <div class="scrim"></div>
+      <div class="scrim-left"></div>
+      <div class="caption">
+        <div>
+          <p class="kicker">Kampus IDB Bali</p>
+          <p class="name">Institut Desain dan Bisnis Bali</p>
+        </div>
+        <span class="bar"></span>
+      </div>
+    </div>
+
+    <div class="login-panel">
+      <div class="mobile-hero" aria-hidden="true">
+        <img src="assets/hero.jpg" alt="" />
+        <div class="scrim"></div>
+        <p>Kampus IDB Bali</p>
+      </div>
+
+      <div class="login-inner">
+        <div class="login-brand">
+          <img src="assets/mark.png" alt="Logo Institut Desain dan Bisnis Bali" />
+          <h1>Sistem Peminjaman Ruangan</h1>
+          <p>Institut Desain dan Bisnis Bali</p>
+        </div>
+
+        <form class="login-form" id="login-form" novalidate>
+          <div class="form-error" id="login-error" role="alert"></div>
+
+          <div class="field">
+            <label for="email">Email <span>*</span></label>
+            <div class="control">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              <input id="email" type="email" placeholder="nama@idb.ac.id" autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="password">Kata sandi <span>*</span></label>
+            <div class="control">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <input id="password" type="password" placeholder="Kata sandi" autocomplete="current-password" style="padding-right:2.6rem" />
+              <button class="eye" type="button" id="toggle-password" aria-label="Tampilkan kata sandi">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="actions">
+            <a class="btn btn-help" href="mailto:info@idbbali.ac.id?subject=Bantuan%20akses%20Sistem%20Peminjaman%20Ruangan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.4 2.3c-.6.3-.9.8-.9 1.4v.3"/><path d="M12 16.5h.01"/></svg>
+              Tidak bisa login?
+            </a>
+            <button class="btn btn-login" type="submit" id="login-submit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/></svg>
+              Masuk
+            </button>
+          </div>
+
+          <div class="demo-box">
+            <b>Akun demo pratinjau</b>
+            <button type="button" data-fill="pemohon">Pemohon — mariodharma@gmail.com</button><br />
+            <button type="button" data-fill="admin">Admin — admin@demo.idb.ac.id</button>
+          </div>
+        </form>
+
+        <div class="login-foot">
+          <p>Belum memiliki akun? Hubungi admin sarana prasarana kampus.</p>
+          <p>© 2026 Institut Desain dan Bisnis Bali</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ APP ============================ -->
+<section id="screen-app" class="app hidden">
+  <header class="app-header">
+    <div class="row">
+      <a class="app-brand" href="#" data-go="dashboard">
+        <img src="assets/mark.png" alt="Logo IDB Bali" />
+        <span>
+          <span class="t1">Sistem Peminjaman Ruangan</span><br />
+          <span class="t2">Institut Desain dan Bisnis Bali</span>
+        </span>
+      </a>
+
+      <nav class="app-nav" aria-label="Navigasi utama">
+        <button data-go="dashboard" class="active" data-nav>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button data-go="ruangan" data-nav>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V6l7-3 7 3v15"/><path d="M9 21v-5h6v5"/></svg>
+          Ruangan
+        </button>
+        <button data-go="kalender" data-nav>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>
+          Kalender
+        </button>
+        <button data-go="riwayat" data-nav>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>
+          Riwayat
+        </button>
+      </nav>
+
+      <div class="app-user">
+        <span class="bell" aria-label="Notifikasi, 2 belum dibaca">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
+          <span class="dot">2</span>
+        </span>
+        <span class="user-chip"><span class="avatar">M</span> Mario</span>
+        <button class="logout" id="logout" aria-label="Keluar dari pratinjau">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+          <span>Keluar</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- Dashboard -->
+    <section data-view="dashboard">
+      <div class="page-head">
+        <div>
+          <h2 id="greeting">Selamat siang, Mario</h2>
+          <p class="sub" id="today">Selasa, 20 Oktober 2026 • 13:51 WITA</p>
+        </div>
+        <button class="btn-primary-sm" data-go="ruangan">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          Ajukan Peminjaman
+        </button>
+      </div>
+
+      <div class="stats">
+        <div class="stat amber">
+          <span class="ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <div class="label">Menunggu persetujuan</div>
+          <div class="value">1</div>
+        </div>
+        <div class="stat">
+          <span class="ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4L19 7"/></svg></span>
+          <div class="label">Disetujui</div>
+          <div class="value">1</div>
+        </div>
+        <div class="stat rose">
+          <span class="ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/></svg></span>
+          <div class="label">Ditolak</div>
+          <div class="value">0</div>
+        </div>
+        <div class="stat stone">
+          <span class="ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3h8l4 4v14H4V3h4Z"/><path d="M9 12h6"/></svg></span>
+          <div class="label">Dibatalkan</div>
+          <div class="value">0</div>
+        </div>
+      </div>
+
+      <div class="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+        <div><strong>Ada pengajuan menunggu keputusan.</strong> Pengajuan berstatus Menunggu Persetujuan belum berarti ruangan sudah dipesan. Ruangan baru terkunci setelah admin menyetujui pengajuan.</div>
+      </div>
+
+      <div class="cols">
+        <div class="card">
+          <div class="card-head">
+            <div><h3>Jadwal peminjaman mendatang</h3><p>Peminjaman yang sudah disetujui</p></div>
+            <button class="link" data-go="kalender" style="border:0;background:none">Kalender →</button>
+          </div>
+          <ul class="list">
+            <li>
+              <div><div class="title">Kritik Karya Desain Produk</div><div class="meta">Studio Gambar • Jum, 23 Okt • 09:00–12:00 WITA</div></div>
+              <span class="badge b-approved">Disetujui</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><h3>Pengajuan terbaru</h3><p>Lima pengajuan terakhir Anda</p></div>
+            <button class="link" data-go="riwayat" style="border:0;background:none">Riwayat →</button>
+          </div>
+          <ul class="list">
+            <li>
+              <div><div class="title">Lab Komputer</div><div class="meta">BK-261027-DEMO2 • 27 Okt 2026, 13:00 WITA</div></div>
+              <span class="badge b-pending">Menunggu</span>
+            </li>
+            <li>
+              <div><div class="title">Studio Gambar</div><div class="meta">BK-261023-DEMO1 • 23 Okt 2026, 09:00 WITA</div></div>
+              <span class="badge b-approved">Disetujui</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ruangan -->
+    <section data-view="ruangan" class="hidden">
+      <div class="page-head">
+        <div><h2>Katalog Ruangan</h2><p class="sub">Lihat fasilitas, kapasitas, dan ketersediaan setiap ruangan kampus.</p></div>
+        <button class="btn-outline-sm" data-go="kalender">Lihat kalender ketersediaan</button>
+      </div>
+
+      <div class="room-grid" id="room-grid"></div>
+      <p style="margin-top:.9rem;font-size:.7rem;color:var(--ink-500)">
+        Nama, deskripsi, dan foto ruangan bersumber dari
+        <a href="https://www.idbbali.ac.id/fasilitas-kampus/" target="_blank" rel="noreferrer" style="color:var(--brand-700);font-weight:600">laman Fasilitas Kampus IDB Bali</a>.
+        Fasilitas umum seperti kantin, lobby, asrama, dan loket akademik tidak termasuk karena bukan ruang yang dipinjam melalui sistem ini.
+      </p>
+    </section>
+
+    <!-- Kalender -->
+    <section data-view="kalender" class="hidden">
+      <div class="page-head">
+        <div><h2>Kalender Ketersediaan</h2></div>
+        <button class="btn-outline-sm" data-go="dashboard">Kembali ke dashboard</button>
+      </div>
+
+      <div class="cal-toolbar">
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <button class="btn-outline-sm" style="width:38px;padding:0" aria-label="Hari sebelumnya">‹</button>
+          <span class="cal-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>
+            Selasa, 20 Oktober 2026
+          </span>
+          <button class="btn-outline-sm" style="width:38px;padding:0" aria-label="Hari berikutnya">›</button>
+        </div>
+        <button class="btn-primary-sm" data-go="ruangan">Ajukan peminjaman</button>
+      </div>
+
+      <div class="legend">
+        <span class="ok">Tersedia</span>
+        <span class="pending">Menunggu</span>
+        <span class="busy">Terisi</span>
+        <span class="blocked">Diblokir</span>
+        <span class="note">Geser ke samping untuk melihat seluruh jam (WITA)</span>
+      </div>
+
+      <div class="cal-scroll">
+        <table class="cal">
+          <caption class="sr-only">Ketersediaan ruangan per jam</caption>
+          <thead>
+            <tr>
+              <th>Ruangan</th>
+              <th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th>
+              <th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th>
+            </tr>
+          </thead>
+          <tbody id="cal-body"></tbody>
+        </table>
+      </div>
+
+      <div class="card" style="margin-top:1rem">
+        <div class="card-head"><div><h3>Rincian jadwal</h3><p>Pengajuan aktif dan blokir pada tanggal ini</p></div></div>
+        <ul class="list">
+          <li>
+            <div><div class="title">Studio Gambar • Kritik Karya Desain Produk</div><div class="meta">09:00–12:00 WITA • BK-261023-DEMO1</div></div>
+            <span class="badge b-rejected" style="background:var(--rose-bg)">Sudah terisi</span>
+          </li>
+          <li>
+            <div><div class="title">Lab Komputer • Workshop Analitik Bisnis</div><div class="meta">13:00–15:00 WITA • BK-261027-DEMO2</div></div>
+            <span class="badge b-pending">Menunggu persetujuan</span>
+          </li>
+          <li>
+            <div><div class="title">Aula • Jadwal kuliah umum</div><div class="meta">08:00–11:00 WITA</div></div>
+            <span class="badge b-cancelled">Diblokir</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Riwayat -->
+    <section data-view="riwayat" class="hidden">
+      <div class="page-head">
+        <div><h2>Riwayat Peminjaman</h2></div>
+        <button class="btn-primary-sm" data-go="ruangan">Ajukan peminjaman</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><h3>Semua pengajuan</h3><p>Data contoh untuk pratinjau</p></div></div>
+        <div class="scroll-x">
+          <table class="data">
+            <thead>
+              <tr><th>Kode</th><th>Ruangan</th><th>Tanggal &amp; waktu</th><th>Kegiatan</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono">BK-261023-DEMO1</td>
+                <td><strong>Studio Gambar</strong><br /><span style="color:var(--ink-500);font-size:.72rem">Kampus IDB Bali</span></td>
+                <td>23 Okt 2026<br /><span style="color:var(--ink-500);font-size:.72rem">09:00–12:00 WITA</span></td>
+                <td>Kritik Karya Desain Produk</td>
+                <td><span class="badge b-approved">Disetujui</span></td>
+              </tr>
+              <tr>
+                <td class="mono">BK-261027-DEMO2</td>
+                <td><strong>Lab Komputer</strong><br /><span style="color:var(--ink-500);font-size:.72rem">Kampus IDB Bali, lantai 1</span></td>
+                <td>27 Okt 2026<br /><span style="color:var(--ink-500);font-size:.72rem">13:00–15:00 WITA</span></td>
+                <td>Workshop Analitik Bisnis</td>
+                <td><span class="badge b-pending">Menunggu</span></td>
+              </tr>
+              <tr>
+                <td class="mono">BK-261020-0001</td>
+                <td><strong>Ruang Kelas</strong><br /><span style="color:var(--ink-500);font-size:.72rem">Kampus IDB Bali</span></td>
+                <td>20 Okt 2026<br /><span style="color:var(--ink-500);font-size:.72rem">15:00–16:00 WITA</span></td>
+                <td>Rapat Himpunan Mahasiswa</td>
+                <td><span class="badge b-cancelled">Dibatalkan</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    Pratinjau statis Sistem Peminjaman Ruangan — Institut Desain dan Bisnis Bali • Waktu WITA (Asia/Makassar)
+  </footer>
+
+  <div id="room-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="room-modal-title">
+    <div class="modal-card">
+      <button type="button" class="modal-close" id="room-modal-close" aria-label="Tutup detail ruangan">×</button>
+      <img id="room-modal-img" alt="" />
+      <div class="modal-body">
+        <span class="cat" id="room-modal-cat"></span>
+        <h3 id="room-modal-title"></h3>
+        <p class="loc" id="room-modal-loc"></p>
+        <dl class="modal-facts">
+          <div><dt>Kapasitas</dt><dd id="room-modal-cap"></dd></div>
+          <div><dt>Lokasi</dt><dd id="room-modal-loc2"></dd></div>
+          <div><dt>Jumlah fasilitas</dt><dd id="room-modal-fac-count"></dd></div>
+          <div><dt>Kategori</dt><dd id="room-modal-cat2"></dd></div>
+        </dl>
+        <div class="modal-fac"><p>Fasilitas</p><div class="chips" id="room-modal-fac"></div></div>
+        <p class="modal-note">Data dan foto bersumber dari laman Fasilitas Kampus IDB Bali. Tekan Esc atau klik di luar kartu untuk menutup.</p>
+      </div>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Navigasi bawah">
+    <button data-go="dashboard" data-nav-mobile class="active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+      Dashboard
+    </button>
+    <button data-go="ruangan" data-nav-mobile>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V6l7-3 7 3v15"/><path d="M9 21v-5h6v5"/></svg>
+      Ruangan
+    </button>
+    <button data-go="kalender" data-nav-mobile>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>
+      Kalender
+    </button>
+    <button data-go="riwayat" data-nav-mobile>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>
+      Riwayat
+    </button>
+  </nav>
+</section>
+
+<script>
+  // ---------- util waktu Bali ----------
+  const WITA = "Asia/Makassar";
+  const fmt = (date, opts) => new Intl.DateTimeFormat("id-ID", { timeZone: WITA, ...opts }).format(date);
+  const hourWita = () => Number(new Intl.DateTimeFormat("en-GB", { timeZone: WITA, hour: "2-digit", hour12: false }).format(new Date()));
+  function greeting() {
+    const h = hourWita();
+    if (h >= 4 && h < 11) return "Selamat pagi";
+    if (h >= 11 && h < 15) return "Selamat siang";
+    if (h >= 15 && h < 18) return "Selamat sore";
+    return "Selamat malam";
+  }
+  function renderClock() {
+    const now = new Date();
+    const tanggal = fmt(now, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    const jam = fmt(now, { hour: "2-digit", minute: "2-digit", hour12: false });
+    document.getElementById("greeting").textContent = `${greeting()}, Mario`;
+    document.getElementById("today").textContent = `${tanggal} • ${jam} WITA`;
+  }
+
+  // ---------- katalog ruangan (sumber: idbbali.ac.id/fasilitas-kampus) ----------
+  const CATALOG = [
+    { name: "Aula", cat: "Aula & Pertemuan", floor: 0, cap: 0, img: "ruangan/aula.jpg", fac: ["Fasilitas acara lengkap"] },
+    { name: "Ruang Asistensi", cat: "Aula & Pertemuan", floor: 3, cap: 0, img: "ruangan/ruang-asistensi.jpg", fac: ["Tata ruang outdoor", "Taman mini", "Meja", "Tempat duduk"] },
+    { name: "Ruang Meeting", cat: "Aula & Pertemuan", floor: 2, cap: 0, img: "ruangan/ruang-meeting.jpg", fac: ["Proyektor", "AC", "Meja melingkar", "Kursi", "Display karya mahasiswa"] },
+    { name: "Gedung Serba Guna", cat: "Fasilitas Umum", floor: 0, cap: 0, img: "ruangan/gedung-serba-guna.jpg", fac: ["Area luas", "Parkir", "Area olahraga"] },
+    { name: "Creative Gallery", cat: "Galeri", floor: 1, cap: 0, img: "ruangan/creative-gallery.jpg", fac: ["Area pameran karya"] },
+    { name: "Lab Fashion Design", cat: "Laboratorium", floor: 1, cap: 0, img: "ruangan/lab-fashion-design.jpg", fac: ["Peralatan desain mode", "Area kerja praktik"] },
+    { name: "Lab Komputer", cat: "Laboratorium", floor: 1, cap: 36, img: "ruangan/lab-komputer.jpg", fac: ["Komputer Intel 12th Gen", "GPU NVIDIA", "Jaringan LAN"] },
+    { name: "Lab Software Development", cat: "Laboratorium", floor: 0, cap: 0, img: "ruangan/ruang-stib.jpg", fac: ["Komputer performa tinggi", "Internet cepat", "Peralatan praktikum"] },
+    { name: "Lab iMac", cat: "Laboratorium", floor: 1, cap: 0, img: "ruangan/lab-imac.jpg", fac: ["iMac M1", "macOS"] },
+    { name: "Ruang Kelas", cat: "Ruang Kelas", floor: 0, cap: 0, img: "ruangan/ruang-kelas.jpg", fac: ["LCD Proyektor", "Komputer presentasi", "Whiteboard", "Bangku kuliah"] },
+    { name: "Ruang Kelas Magister", cat: "Ruang Kelas", floor: 0, cap: 0, img: "ruangan/ruang-kelas-magister.jpg", fac: ["Kamera", "Peralatan digital"] },
+    { name: "Studio Foto", cat: "Studio", floor: 1, cap: 0, img: "ruangan/studio-foto.jpg", fac: ["Background", "Properti penunjang"] },
+    { name: "Studio Gambar", cat: "Studio", floor: 0, cap: 0, img: "ruangan/studio-gambar.jpg", fac: ["Ruang luas", "AC"] },
+    { name: "Studio Maket", cat: "Studio", floor: 0, cap: 0, img: "ruangan/studio-maket.jpg", fac: ["Area kerja maket", "Peralatan maket"] },
+    { name: "Studio Pola", cat: "Studio", floor: 1, cap: 0, img: "ruangan/studio-pola.jpg", fac: ["Meja gambar pola", "Area potong bahan"] },
+    { name: "Studio Reproduksi Grafika", cat: "Studio", floor: 0, cap: 0, img: "ruangan/studio-reproduksi-grafika.jpg", fac: ["Peralatan cetak manual", "Media kain, kertas, plastik, kulit"] }
+  ];
+  const roomLoc = (room) => `Kampus IDB Bali${room.floor > 0 ? `, lantai ${room.floor}` : ""}`;
+
+  function renderCatalog() {
+    const grid = document.getElementById("room-grid");
+    grid.innerHTML = CATALOG.map((room, index) => `
+      <article class="room" data-room="${index}" tabindex="0" role="button" aria-label="Buka detail ${room.name}">
+        <div class="thumb">
+          <img src="${room.img}" alt="Foto ${room.name}" loading="lazy" />
+        </div>
+        <div class="head">
+          <div>
+            <span class="cat">${room.cat}</span>
+            <h3>${room.name}</h3>
+            <div class="loc">${roomLoc(room)}</div>
+          </div>
+          <span class="badge b-approved">Aktif</span>
+        </div>
+        <div class="body">
+          <div class="facts"><span>${room.cap > 0 ? `${room.cap} orang` : "Kapasitas belum tercatat"}</span><span>${room.fac.length} fasilitas</span></div>
+          <div class="chips">${room.fac.slice(0, 3).map((item) => `<span class="chip">${item}</span>`).join("")}${room.fac.length > 3 ? `<span class="chip">+${room.fac.length - 3}</span>` : ""}</div>
+        </div>
+        <div class="foot">Lihat detail ruangan →</div>
+      </article>
+    `).join("");
+  }
+
+  const roomModal = document.getElementById("room-modal");
+  const roomModalClose = document.getElementById("room-modal-close");
+  let lastFocusedCard = null;
+
+  function openRoomModal(index) {
+    const room = CATALOG[index];
+    if (!room) return;
+    lastFocusedCard = document.activeElement;
+    document.getElementById("room-modal-img").src = room.img;
+    document.getElementById("room-modal-img").alt = `Foto ${room.name}`;
+    document.getElementById("room-modal-cat").textContent = room.cat;
+    document.getElementById("room-modal-cat2").textContent = room.cat;
+    document.getElementById("room-modal-title").textContent = room.name;
+    document.getElementById("room-modal-loc").textContent = roomLoc(room);
+    document.getElementById("room-modal-loc2").textContent = roomLoc(room);
+    document.getElementById("room-modal-cap").textContent = room.cap > 0 ? `${room.cap} orang` : "Belum tercatat";
+    document.getElementById("room-modal-fac-count").textContent = `${room.fac.length} fasilitas`;
+    const facilities = document.getElementById("room-modal-fac");
+    facilities.innerHTML = "";
+    room.fac.forEach((item) => {
+      const chip = document.createElement("span");
+      chip.className = "chip";
+      chip.textContent = item;
+      facilities.appendChild(chip);
+    });
+    roomModal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+    roomModalClose.focus();
+  }
+
+  function closeRoomModal() {
+    roomModal.classList.add("hidden");
+    document.body.style.overflow = "";
+    if (lastFocusedCard && typeof lastFocusedCard.focus === "function") lastFocusedCard.focus();
+  }
+
+  const roomGrid = document.getElementById("room-grid");
+  roomGrid.addEventListener("click", (event) => {
+    const card = event.target.closest(".room");
+    if (card) openRoomModal(Number(card.dataset.room));
+  });
+  roomGrid.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    const card = event.target.closest(".room");
+    if (!card) return;
+    event.preventDefault();
+    openRoomModal(Number(card.dataset.room));
+  });
+  roomModalClose.addEventListener("click", closeRoomModal);
+  roomModal.addEventListener("click", (event) => {
+    if (event.target === roomModal) closeRoomModal();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !roomModal.classList.contains("hidden")) closeRoomModal();
+  });
+
+  // ---------- data kalender contoh ----------
+  const ROOMS = CATALOG.map((room) => ({
+    name: room.name,
+    loc: `Kampus IDB Bali${room.floor > 0 ? ` • L${room.floor}` : ""}`
+  }));
+  const HOURS = 15; // 07.00 - 21.00
+  const MARKED = {
+    "Studio Gambar": { 2: "busy", 3: "busy", 4: "busy" },        // 09-12 terisi
+    "Lab Komputer": { 6: "pending", 7: "pending" },               // 13-15 menunggu
+    "Aula": { 1: "blocked", 2: "blocked", 3: "blocked" },         // 08-11 diblokir
+    "Ruang Kelas": { 8: "pending" }
+  };
+  function buildCalendar() {
+    const body = document.getElementById("cal-body");
+    body.innerHTML = ROOMS.map((room) => {
+      const cells = Array.from({ length: HOURS }, (_, index) => {
+        const kind = MARKED[room.name]?.[index] ?? "ok";
+        return `<td><div class="cell ${kind}" title="${room.name} • ${String(index + 7).padStart(2, "0")}:00 • ${
+          kind === "ok" ? "Tersedia" : kind === "pending" ? "Menunggu" : kind === "busy" ? "Terisi" : "Diblokir"
+        }"></div></td>`;
+      }).join("");
+      return `<tr><th scope="row">${room.name}<small>${room.loc}</small></th>${cells}</tr>`;
+    }).join("");
+  }
+
+  // ---------- navigasi pratinjau ----------
+  function showApp() {
+    document.getElementById("screen-login").classList.add("hidden");
+    document.getElementById("screen-app").classList.remove("hidden");
+    renderClock();
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function showLogin() {
+    document.getElementById("screen-app").classList.add("hidden");
+    document.getElementById("screen-login").classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function go(view) {
+    document.querySelectorAll("[data-view]").forEach((section) => {
+      section.classList.toggle("hidden", section.dataset.view !== view);
+    });
+    document.querySelectorAll("[data-nav]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.go === view);
+    });
+    document.querySelectorAll("[data-nav-mobile]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.go === view);
+    });
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  document.querySelectorAll("[data-go]").forEach((element) => {
+    element.addEventListener("click", (event) => {
+      event.preventDefault();
+      go(element.dataset.go);
+    });
+  });
+
+  // ---------- login demo ----------
+  const DEMO = {
+    pemohon: { email: "mariodharma@gmail.com", password: "mariodharma" },
+    admin: { email: "admin@demo.idb.ac.id", password: "Admin123!" }
+  };
+  document.querySelectorAll("[data-fill]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const data = DEMO[button.dataset.fill];
+      document.getElementById("email").value = data.email;
+      document.getElementById("password").value = data.password;
+      document.getElementById("login-error").classList.remove("show");
+    });
+  });
+  document.getElementById("toggle-password").addEventListener("click", () => {
+    const input = document.getElementById("password");
+    input.type = input.type === "password" ? "text" : "password";
+  });
+  document.getElementById("login-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const password = document.getElementById("password").value;
+    const error = document.getElementById("login-error");
+    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      error.textContent = "Masukkan alamat email yang valid.";
+      error.classList.add("show");
+      return;
+    }
+    if (password.length < 8) {
+      error.textContent = "Kata sandi minimal 8 karakter.";
+      error.classList.add("show");
+      return;
+    }
+    error.classList.remove("show");
+    showApp();
+  });
+  document.getElementById("logout").addEventListener("click", showLogin);
+
+  renderCatalog();
+  buildCalendar();
+  renderClock();
+</script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sistem Peminjaman Ruangan — IDB Bali</title>
+<meta name="description" content="Aplikasi peminjaman ruangan kampus Institut Desain dan Bisnis Bali: katalog ruangan, kalender ketersediaan, pengajuan online, persetujuan admin, dan pencegahan jadwal bentrok." />
+<meta property="og:title" content="Sistem Peminjaman Ruangan — IDB Bali" />
+<meta property="og:description" content="Kelola peminjaman ruangan kampus dengan jadwal yang jelas. Waktu dalam WITA." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="assets/mark.png" />
+<style>
+  :root {
+    --brand-900: #012f46;
+    --brand-800: #023e5c;
+    --brand-700: #024d71;
+    --brand-600: #0c5d80;
+    --brand-500: #1e7096;
+    --brand-100: #d6e9f5;
+    --brand-50: #eef6fb;
+    --accent: #f17711;
+    --accent-50: #fff4ea;
+    --ink-900: #101820;
+    --ink-700: #33404d;
+    --ink-500: #6b7885;
+    --line: #e3e8ee;
+    --surface: #ffffff;
+    --canvas: #f6f8fa;
+    --radius: 18px;
+    --shadow: 0 1px 2px rgba(16, 24, 32, .04), 0 18px 40px -24px rgba(16, 24, 32, .22);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--canvas);
+    color: var(--ink-900);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .wrap { width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
+  .topbar {
+    background: var(--brand-700);
+    color: #fff;
+    padding: .85rem 0;
+  }
+  .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .brand { display: flex; align-items: center; gap: .65rem; font-weight: 600; letter-spacing: .01em; }
+  .brand img { width: 30px; height: 30px; }
+  .topbar nav { display: flex; gap: 1.25rem; font-size: .85rem; }
+  .topbar nav a { text-decoration: none; color: rgba(255,255,255,.85); }
+  .topbar nav a:hover { color: #fff; }
+
+  header.hero { padding: 4.5rem 0 3rem; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: var(--brand-50); color: var(--brand-700);
+    border: 1px solid var(--brand-100);
+    padding: .35rem .7rem; border-radius: 999px;
+    font-size: .78rem; font-weight: 600; letter-spacing: .02em;
+  }
+  .eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  h1 {
+    font-size: clamp(2rem, 4.4vw, 3.15rem);
+    line-height: 1.12; letter-spacing: -.02em; margin: .9rem 0 .8rem;
+    max-width: 18ch;
+  }
+  .lede { font-size: 1.05rem; color: var(--ink-500); max-width: 58ch; margin: 0; }
+  .cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.6rem; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .7rem 1.1rem; border-radius: 10px; font-size: .9rem; font-weight: 600;
+    text-decoration: none; border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--brand-700); color: #fff; }
+  .btn-primary:hover { background: var(--brand-800); }
+  .btn-ghost { background: #fff; border-color: var(--line); color: var(--ink-700); }
+  .btn-ghost:hover { border-color: #c9d3dd; }
+
+  .frame {
+    margin-top: 2.6rem;
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .frame-bar { display: flex; align-items: center; gap: .5rem; padding: .7rem .9rem; border-bottom: 1px solid var(--line); background: #fbfcfd; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: #dfe5eb; }
+  .frame-url { margin-left: .5rem; flex: 1; font-size: .72rem; color: var(--ink-500); background: #f2f5f8; border-radius: 6px; padding: .3rem .6rem; }
+
+  section { padding: 3.4rem 0; }
+  section.alt { background: #fff; border-block: 1px solid var(--line); }
+  .section-head { max-width: 62ch; margin-bottom: 1.8rem; }
+  h2 { font-size: clamp(1.4rem, 2.4vw, 1.9rem); letter-spacing: -.015em; margin: 0 0 .42rem; }
+  .section-head p { margin: 0; color: var(--ink-500); }
+
+  .grid { display: grid; gap: 1rem; }
+  .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .card {
+    background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.15rem;
+  }
+  .card h3 { margin: .55rem 0 .3rem; font-size: .98rem; }
+  .card p { margin: 0; font-size: .87rem; color: var(--ink-500); }
+  .icon {
+    width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
+    background: var(--brand-50); color: var(--brand-700);
+  }
+  .icon svg { width: 18px; height: 18px; }
+
+  .shots { display: grid; grid-template-columns: 1.55fr 1fr; gap: 1.2rem; align-items: start; }
+  .shot { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #fff; box-shadow: var(--shadow); }
+  .shot img { width: 100%; }
+  .shot figcaption { font-size: .78rem; color: var(--ink-500); padding: .6rem .8rem; border-top: 1px solid var(--line); }
+  .phones { display: flex; gap: 1rem; }
+  .phones .shot { flex: 1; }
+  .phones img { height: 420px; object-fit: cover; object-position: top; }
+
+  .steps { counter-reset: step; display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
+  .step { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.15rem; }
+  .step .num {
+    counter-increment: step; width: 26px; height: 26px; border-radius: 50%;
+    background: var(--brand-700); color: #fff; display: grid; place-items: center;
+    font-size: .78rem; font-weight: 700;
+  }
+  .step .num::before { content: counter(step); }
+  .step h3 { font-size: .95rem; margin: .7rem 0 .25rem; }
+  .step p { margin: 0; font-size: .86rem; color: var(--ink-500); }
+
+  .rules { display: grid; grid-template-columns: 1.1fr .9fr; gap: 1.4rem; align-items: start; }
+  .rulelist { list-style: none; padding: 0; margin: 0; display: grid; gap: .7rem; }
+  .rulelist li { display: flex; gap: .65rem; font-size: .9rem; color: var(--ink-700); }
+  .check { flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--brand-50); color: var(--brand-700); display: grid; place-items: center; font-size: .7rem; font-weight: 700; margin-top: .18rem; }
+  .callout { background: var(--accent-50); border: 1px solid #ffd9b3; border-radius: 14px; padding: 1.1rem; }
+  .callout h3 { margin: 0 0 .35rem; font-size: .92rem; }
+  .callout p { margin: 0; font-size: .86rem; color: #7a3d02; }
+
+  .tech { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+  .chip { font-size: .76rem; font-weight: 600; color: var(--ink-700); background: #fff; border: 1px solid var(--line); padding: .35rem .65rem; border-radius: 999px; }
+  .chip.brand { color: var(--brand-700); background: var(--brand-50); border-color: var(--brand-100); }
+
+  footer { padding: 2rem 0 3rem; color: var(--ink-500); font-size: .8rem; border-top: 1px solid var(--line); background: #fff; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; justify-content: space-between; align-items: center; }
+  footer strong { color: var(--ink-700); }
+
+  @media (max-width: 900px) {
+    .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .shots, .rules { grid-template-columns: 1fr; }
+    .phones img { height: 340px; }
+  }
+  @media (max-width: 680px) {
+    .topbar nav { display: none; }
+    header.hero { padding: 3rem 0 2rem; }
+    .grid-3, .steps { grid-template-columns: 1fr; }
+    .grid-4 { grid-template-columns: 1fr; }
+    .phones img { height: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/mark.png" alt="" />
+      <span>IDB Bali</span>
+    </div>
+    <nav aria-label="Navigasi halaman">
+      <a href="#fitur">Fitur</a>
+      <a href="#tampilan">Tampilan</a>
+      <a href="#alur">Alur</a>
+      <a href="#aturan">Aturan jadwal</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow"><span></span> Sistem Peminjaman Ruangan</p>
+    <h1>Kelola peminjaman ruangan kampus dengan jadwal yang jelas.</h1>
+    <p class="lede">
+      Aplikasi web untuk sivitas akademika Institut Desain dan Bisnis Bali: melihat
+      ketersediaan ruangan, mengajukan peminjaman, dan memantau keputusan admin — tanpa
+      jadwal yang bertabrakan. Semua waktu ditampilkan dalam WITA.
+    </p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#tampilan">Lihat tampilan aplikasi</a>
+      <a class="btn btn-ghost" href="#fitur">Jelajahi fitur</a>
+    </div>
+
+    <div class="frame">
+      <div class="frame-bar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="frame-url">Dashboard pemohon — ringkasan pengajuan, jadwal mendatang, dan status terbaru</span>
+      </div>
+      <img src="assets/dashboard.png" alt="Tangkapan layar dashboard pemohon dengan ringkasan pengajuan dan jadwal mendatang" />
+    </div>
+  </div>
+</header>
+
+<section id="fitur">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Fitur utama</h2>
+      <p>Dibangun untuk kebutuhan nyata peminjaman ruangan kampus, bukan sekadar halaman statis.</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="card">
+        <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></div>
+        <h3>Katalog ruangan</h3>
+        <p>Nama, gedung, lantai, kapasitas, dan fasilitas setiap ruangan, lengkap dengan detail per ruangan.</p>
+      </article>
+      <article class="card">
+        <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg></div>
+        <h3>Kalender ketersediaan</h3>
+        <p>Status per jam untuk seluruh ruangan: hijau tersedia, kuning menunggu, merah terisi, abu-abu diblokir.</p>
+      </article>
+      <article class="card">
+        <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div>
+        <h3>Pengajuan online</h3>
+        <p>Formulir dengan validasi lengkap, ringkasan sebelum kirim, dan saran jadwal alternatif saat bentrok.</p>
+      </article>
+      <article class="card">
+        <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></div>
+        <h3>Persetujuan admin</h3>
+        <p>Admin menyetujui atau menolak dengan alasan wajib. Keputusan langsung tampil di dashboard pemohon.</p>
+      </article>
+      <article class="card">
+        <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11z"/></svg></div>
+        <h3>Peran &amp; akses</h3>
+        <p>Pemohon dan admin dipisahkan di server. Setiap endpoint diperiksa; data pengajuan hanya untuk pemilik dan admin.</p>
+      </article>
+      <article class="card">
+        <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5"/></svg></div>
+        <h3>Riwayat &amp; pembatalan</h3>
+        <p>Filter status dan pencarian, detail keputusan, serta pembatalan oleh pemohon sesuai ketentuan.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="tampilan" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Tampilan aplikasi</h2>
+      <p>Antarmuka mobile-first dengan navigasi sederhana, status berwarna konsisten, dan tabel yang nyaman di ponsel.</p>
+    </div>
+
+    <div class="shots">
+      <figure class="shot">
+        <img src="assets/kalender.png" alt="Kalender ketersediaan ruangan per jam dengan kode warna status" />
+        <figcaption>Kalender ketersediaan — status per jam dari data peminjaman yang tersimpan.</figcaption>
+      </figure>
+      <div class="phones">
+        <figure class="shot">
+          <img src="assets/ponsel-dashboard.png" alt="Tampilan dashboard pada ponsel" />
+          <figcaption>Dashboard di ponsel</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/ponsel-kalender.png" alt="Tampilan kalender ketersediaan pada ponsel" />
+          <figcaption>Kalender di ponsel</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="shots" style="margin-top:1.2rem">
+      <figure class="shot">
+        <img src="assets/detail.png" alt="Halaman detail pengajuan dengan status dan riwayat keputusan" />
+        <figcaption>Detail pengajuan — status, alasan penolakan, dan riwayat keputusan.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="assets/admin.png" alt="Dashboard admin sarana prasarana" />
+        <figcaption>Dashboard admin — statistik, pengajuan menunggu, dan jadwal mendatang.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="alur">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Alur peminjaman</h2>
+      <p>Tiga langkah dari pengajuan sampai ruangan siap dipakai.</p>
+    </div>
+    <div class="steps">
+      <article class="step">
+        <div class="num" aria-hidden="true"></div>
+        <h3>Pilih ruangan &amp; waktu</h3>
+        <p>Cek kalender, pilih slot yang tersedia, lalu isi kegiatan, jumlah peserta, dan keperluan.</p>
+      </article>
+      <article class="step">
+        <div class="num" aria-hidden="true"></div>
+        <h3>Admin meninjau</h3>
+        <p>Sistem memeriksa ulang bentrok jadwal saat admin menyetujui. Penolakan wajib disertai alasan.</p>
+      </article>
+      <article class="step">
+        <div class="num" aria-hidden="true"></div>
+        <h3>Jadwal terkunci</h3>
+        <p>Setelah disetujui, slot berubah merah di kalender. Pembatalan mengembalikan ketersediaan ruangan.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="aturan" class="alt">
+  <div class="wrap rules">
+    <div>
+      <h2>Aturan jadwal dijaga di server dan database</h2>
+      <p class="lede" style="font-size:.95rem">
+        Pencegahan jadwal bentrok tidak bergantung pada tampilan. Pemeriksaan dilakukan pada
+        transaksi database dengan penguncian per ruangan, ditambah constraint PostgreSQL agar
+        dua peminjaman disetujui tidak dapat menempati waktu yang sama.
+      </p>
+      <ul class="rulelist" style="margin-top:1.2rem">
+        <li><span class="check" aria-hidden="true">✓</span><span>Tidak ada dua peminjaman <strong>disetujui</strong> yang bertumpang tindih pada ruangan yang sama.</span></li>
+        <li><span class="check" aria-hidden="true">✓</span><span>Pemeriksaan ketersediaan saat pengajuan dibuat <em>dan</em> saat admin menyetujui.</span></li>
+        <li><span class="check" aria-hidden="true">✓</span><span>Pengajuan menunggu tidak otomatis dianggap sebagai peminjaman disetujui.</span></li>
+        <li><span class="check" aria-hidden="true">✓</span><span>Pemohon hanya dapat membatalkan pengajuannya sendiri; admin menerima pemberitahuan.</span></li>
+        <li><span class="check" aria-hidden="true">✓</span><span>Blokir jadwal untuk kuliah/perawatan tersedia dan menjadi struktur integrasi jadwal akademik.</span></li>
+      </ul>
+    </div>
+    <aside class="callout">
+      <h3>Catatan tentang halaman ini</h3>
+      <p>
+        Ini adalah halaman presentasi statis. Aplikasi lengkapnya berjalan dengan backend
+        Next.js dan database PostgreSQL, sehingga tidak dijalankan di layanan hosting statis.
+      </p>
+      <p style="margin-top:.6rem">
+        Data ruangan pada tangkapan layar adalah data contoh pengembangan.
+      </p>
+      <div class="tech">
+        <span class="chip brand">Next.js</span>
+        <span class="chip">TypeScript</span>
+        <span class="chip">PostgreSQL</span>
+        <span class="chip">Prisma</span>
+        <span class="chip">Zod</span>
+        <span class="chip">Tailwind CSS</span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p style="margin:0"><strong>Sistem Peminjaman Ruangan</strong> — Institut Desain dan Bisnis Bali</p>
+    <p style="margin:0">Zona waktu WITA (Asia/Makassar) · Pratinjau antarmuka</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-sand-50 text-ink-900 antialiased;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+::selection {
+  @apply bg-brand-100 text-brand-900;
+}
+
+/* Fokus keyboard yang jelas untuk seluruh elemen interaktif. */
+@layer base {
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-sand-50;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-stone-200/80 bg-white shadow-card;
+  }
+
+  .table-base {
+    @apply w-full border-collapse text-sm;
+  }
+
+  .table-base thead th {
+    @apply border-b border-stone-200 bg-sand-50/80 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-ink-500;
+  }
+
+  .table-base tbody td {
+    @apply border-b border-stone-100 px-4 py-3 align-middle text-ink-700;
+  }
+
+  .table-base tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .skeleton {
+    @apply animate-pulse rounded-md bg-stone-200/70;
+  }
+}
+
+/* Sembunyikan scrollbar horizontal pada timeline kalender tanpa menghilangkan aksesibilitas. */
+.scroll-thin {
+  scrollbar-width: thin;
+}
+
+/* Pola titik halus pada panel login, mengikuti gaya halaman masuk SINERGY IDB Bali. */
+.login-pattern {
+  background-image: radial-gradient(rgba(2, 77, 113, 0.09) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position: 0 0;
+}

@@ -1,0 +1,210 @@
+[
+  {
+    "slug": "gedung-kampus",
+    "title": "Gedung Kampus",
+    "description": "Memiliki desain yang dapat memberikan kenyamanan dalam proses belajar mengajar. Berisi semua fasilitas yang disediakan sebagai proses dalam membangun karakter dan kepribadian dalam menempuh bidang studi dan proses sosialisasi di Kampus.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/gedung-idb-baru.jpg",
+    "imageWidth": 800,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/gedung-idb-baru.jpg"
+  },
+  {
+    "slug": "studio-gambar",
+    "title": "Studio Gambar",
+    "description": "Ruang Studio ini dipergunakan untuk perkuliahan yang menggunakan sketsa, membuat modeling dan aktivitas lainnya yang memerlukan space yang luas. Ruang Studio ini cukup luas. Serta di lengkapi dengan AC untuk kenyamanan dalam pembelajaran perkuliahan.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/studio-gambar-idb-1-1536x1152.jpg",
+    "imageWidth": 1536,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/studio-gambar-idb-1-scaled.jpg"
+  },
+  {
+    "slug": "lab-komputer",
+    "title": "Lab Komputer",
+    "description": "Komputer dengan 12th gen Intel CPU dan graphic card NVIDIA terbaru. Semua komputer terhubung oleh Local Area Network, sehingga memudahkan komunikasi antar komputer. Untuk proses belajar mengajar yang efektif, setiap kelas maksimum hanya di isi 24-36 orang mahasiswa. Lab ini dapat digunakan oleh semua program studi yang ada di IDB Bali dan berada di lantai 1.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/lab-komputer-baru-idb-1.jpg",
+    "imageWidth": 800,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/lab-komputer-baru-idb-1.jpg"
+  },
+  {
+    "slug": "lab-imac",
+    "title": "Lab iMac",
+    "description": "Lab dengan komputer berbasis OSX seperti iMac dengan menggunakan M1 Chip bagi industri desain menjadi sebuah keharusan mengingat standar nasional maupun internasional dalam menciptakan sebuah desain, turut ditentukan oleh penggunaan piranti yang mumpuni sehingga dapat menunjang kegiatan pembelajaran khususnya yang bersifat praktik. Lab ini dapat digunakan oleh semua program studi yang ada di IDB Bali dan berada di lantai 1.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/lab-imac-terbaru-idb-1.jpg",
+    "imageWidth": 800,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/lab-imac-terbaru-idb-1.jpg"
+  },
+  {
+    "slug": "ruang-kelas",
+    "title": "Ruang Kelas",
+    "description": "Digunakan untuk kegiatan perkuliahan non praktek dilengkapi dengan LCD Proyektor, komputer untuk presentasi mata kuliah bagi dosen ataupun mahasiswa, whiteboard, dan bangku kuliah yang nyaman untuk mahasiswa. Ruang kelas memberikan keleluasaan bagi dosen dan mahasiswa untuk melaksanakan kegiatan belajar mengajar karena jumlah mahasiswa dalam kelas selalu disesuaikan dengan kapasitas ruangan yang tersedia.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2024/05/ruang-kelas-idbbali.jpg",
+    "imageWidth": 800,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2024/05/ruang-kelas-idbbali.jpg"
+  },
+  {
+    "slug": "lab-fashion-design",
+    "title": "Lab Fashion Design",
+    "description": "Lab Fashion Design, diperuntukkan bagi mahasiswa Program Studi Desain Mode/Fashion Design, dalam pengembangan produk yang telah dirancang, baik secara digital maupun manual. Di Lab Fashion Design, mahasiswa dapat mengeksplorasi teknik, pola, dan sebagainya, untuk menghasilkan produk Fashion yang memiliki kualitas tinggi, baik dari segi penampilan maupun kenyamanan pengguna. Lab ini terletak di lantai 1.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/lab-desain-mode-idb.jpg",
+    "imageWidth": 800,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/lab-desain-mode-idb.jpg"
+  },
+  {
+    "slug": "studio-reproduksi-grafika",
+    "title": "Studio Reproduksi Grafika",
+    "description": "Perkembangan industri kreatif khususnya dalam hal craftmanship, menuntut sebuah institusi yang mengedepankan kreatifitas sebagai penunjang kegiatan pembelajaran untuk selalu menyediakan fasilitas yang dapat menampung ide-ide dari mahasiswa yang ingin dituangkan ke dalam sebuah media. Studio Metode Reproduksi Grafika dihadirkan bagi mahasiswa IDB Bali untuk menunjang mahasiswa dalam menciptakan karya desain yang ingin dituangkan ke dalam berbagai media yang tidak dapat dicetak secara langsung dengan mesin cetak biasa seperti kain, kertas, plastik, kulit, dan sebagainya.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/studio-produksi-idb.jpg",
+    "imageWidth": 370,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/studio-produksi-idb.jpg"
+  },
+  {
+    "slug": "studio-maket",
+    "title": "Studio Maket",
+    "description": "Mahasiswa desain yang diharapkan dapat menyajikan purwarupa sebelum mengeksekusi sebuah karya ke dalam medium nyata membutuhkan wadah untuk menuangkan inspirasinya. Industri desain interior menuntut para profesional di bidangnya mampu menciptakan sebuah maket yang dapat dipergunakan sebagai tampilan awal yang dapat ditunjukan kepada klien agar terjadi komunikasi yang baik dalam perencanaan sebuah tata ruang. IDB Bali menyajikan fasilitas bagi mahasiswa yang dapat dimanfaatkan untuk mengerjakan proyek maket untuk kebutuhan tugas kuliah maupun tugas akhir mahasiswa.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/studio-maket-idb.jpg",
+    "imageWidth": 400,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/studio-maket-idb.jpg"
+  },
+  {
+    "slug": "loket-akademik",
+    "title": "Loket Akademik",
+    "description": "Loket yang disediakan khusus untuk mahasiswa dalam mencari informasi tentang kegiatan belajar yang ada di IDB Bali dan juga menjadi tempat untuk melakukan Kegiatan Administrasi Perkuliahan seperti Pengisian KRS, Penjadwalan Kuliah, Pengurusan Ijasah dan Sertifikat, serta Pengurusan Surat-surat untuk kepentingan perkuliahan lainnya. Para staff akademik yang ramah selalu siap melayani dan membantu kebutuhan mahasiswa dalam bidang administrasi.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/akademik-idb.jpg",
+    "imageWidth": 370,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/akademik-idb.jpg"
+  },
+  {
+    "slug": "wall-portofolio",
+    "title": "Wall Portofolio",
+    "description": "Wall ini ditujukan untuk mengapresiasikan segala hasil karya yang terpilih dari mahasiswa IDB Bali. Tersedia diseluruh lorong IDB Bali, lobby, lapangan parkir, hingga aula IDB Bali. Wall portfolio ini diharapkan dapat merangsang mahasiswa untuk berkarya sebaik-baiknya. Selain itu juga mampu memberikan informasi dan hiburan bagi mereka yang datang ke kampus IDB Bali.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/wall-portofolio-idb.jpg",
+    "imageWidth": 370,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/wall-portofolio-idb.jpg"
+  },
+  {
+    "slug": "gedung-serba-guna",
+    "title": "Gedung Serba Guna",
+    "description": "Dengan ruang yang besar, gedung ini dapat digunakan untuk berbagai macam aktifitas mulai dari sebagai tempat parkir yang luas dan aman, Gedung ini juga dapat digunakan sebagai tempat olahraga, ekstakulikuler maupun kegiatan lainnya yang memerlukan tempat luas.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/gedung-serbaguna-idb.jpg",
+    "imageWidth": 370,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/gedung-serbaguna-idb.jpg"
+  },
+  {
+    "slug": "perpustakaan",
+    "title": "Perpustakaan",
+    "description": "Terdapat koleksi buku internasional dan dalam negeri, jurnal (cetak dan online) yang komprehensif dan materi terkait kursus lainnya, seperti majalah dan banyak lagi, sebagai penunjang referensi dalam mengikuti materi perkuliahan. Perpustakaan terletak di lantai 3.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2024/05/new-perpustakaan-idb.jpg",
+    "imageWidth": 800,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2024/05/new-perpustakaan-idb.jpg"
+  },
+  {
+    "slug": "creative-corner",
+    "title": "Creative Corner",
+    "description": "Tempat yang nyaman dimana mahasiswa dapat duduk rileks, bercerita dengan yang lain atau mungkin belajar. Terletak tepat disebelah kantin sehingga kamu dapat makan dan minum juga di Creative Corner. Creative Corner terletak di lantai 2, sebelah kantin.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/cafe-kantin-idb.jpg",
+    "imageWidth": 370,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/cafe-kantin-idb.jpg"
+  },
+  {
+    "slug": "aula",
+    "title": "Aula",
+    "description": "Hall/Aula IDB Bali memiliki fasilitas lengkap dan baru yang dapat digunakan dalam acara-acara yang diadakan dalam lingkungan kampus seperti Seminar, Workshop, Pelatihan-pelatihan, Kegiatan UKM dan lain-lain.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2024/01/aula-idb-bali-1536x1024.jpg",
+    "imageWidth": 1536,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2024/01/aula-idb-bali.jpg"
+  },
+  {
+    "slug": "ruang-asistensi",
+    "title": "Ruang Asistensi",
+    "description": "Untuk menunjang pemahaman materi perkuliahan, IDB Bali menyediakan Ruang Asistensi yang sangat nyaman. Dengan tata ruang outdoor yang dilengkapi dengan taman mini, maka proses asistensi akan semakin mengasikkan dengan kelengkapan meja dan tempat duduk. Ruang asistensi terletak di lantai 3.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/ruang-asistensi-idb.jpg",
+    "imageWidth": 370,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/ruang-asistensi-idb.jpg"
+  },
+  {
+    "slug": "asrama",
+    "title": "Asrama",
+    "description": "IDB Bali menyediakan Asrama untuk Mahasiswa yang ingin belajar mandiri. Setiap kamar sudah dilengkapi dengan berbagai fasilitas penunjang seperti twin bed, meja dan kursi belajar, LCD TV 32 inci, AC serta almari (Kamar Exclusive). Setiap kamar dilengkapi dengan kamar mandi dalam dan fasilitas WIFI 24 jam.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/asrama-mesh-idb.jpg",
+    "imageWidth": 370,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/asrama-mesh-idb.jpg"
+  },
+  {
+    "slug": "ruang-dosen",
+    "title": "Ruang Dosen",
+    "description": "Ruang Dosen dilengkapi meja besar dengan pembagian blok setiap meja untuk setiap dosen, serta dilengkapi berbagai fasilitas AC, jaringan internet, fasilitas telepon. Juga tersedia blok-blok ruangan jurusan memungkinkan atmosfir akademik dapat terbentuk dengan baik di lingkungan sivitas akademika IDB Bali.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/ruang-dosen-idb.jpg",
+    "imageWidth": 370,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/ruang-dosen-idb.jpg"
+  },
+  {
+    "slug": "ruang-meeting",
+    "title": "Ruang Meeting",
+    "description": "Ruang pertemuan didesain menarik dan nyaman untuk para tamu maupun karyawan di IDB Bali. Fasilitas yang terdapat di ruangan meeting adalah proyektor untuk presentasi, AC, kursi dan meja besar melingkar dan interior ruangan dihiasi dengan display karya-karya mahasiswa agar ruangan lebih menarik untuk dilihat. Ruang meeting terletak di lantai 2.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/ruang-meeting-idb.jpg",
+    "imageWidth": 370,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/11/ruang-meeting-idb.jpg"
+  },
+  {
+    "slug": "tv-broadcasting",
+    "title": "TV Broadcasting",
+    "description": "Fasilitas baru kampus IDB Bali, dimanfaatkan untuk memberikan informasi berupa Jadwal Perkuliahan, Pengumuman Langsung, pemutaran hasil karya mahasiswa dalam bentuk slideshow maupun video, berbagai macam tutorial dan pemutaran berbagai macam acara yang di selengarakan IDB Bali dalam bentuk dokumentasi video.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/tv-broadcasting-idb.jpg",
+    "imageWidth": 800,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/tv-broadcasting-idb.jpg"
+  },
+  {
+    "slug": "creative-gallery",
+    "title": "Creative Gallery",
+    "description": "Galeri hasil karya mahasiswa dalam menampilkan bakat, jiwa kewirausahaan dan kreatifitas mereka, galeri ini berisi segala hasil karya dari berbagai program studi yang ada di IDB Bali. Lokasinya berada di lantai 1.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/creative-gallery-idb.jpg",
+    "imageWidth": 800,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/creative-gallery-idb.jpg"
+  },
+  {
+    "slug": "kantin",
+    "title": "Kantin",
+    "description": "Menyediakan berbagai minuman dan makanan. Selain menikmati makan dan minum saat istirahat, mahasiswa juga dapat sambil berdiskusi, mengerjakan tugas, hingga mengakses internet dengan layanan WiFi gratis yang disediakan. Kantin terletak di lantai 2.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/1670418014901.jpg",
+    "imageWidth": 1024,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/1670418014901.jpg"
+  },
+  {
+    "slug": "studio-pola",
+    "title": "Studio Pola",
+    "description": "Ruang studio pola ini digunakan mahasiswa Desain Mode untuk menggambar pola sebagai kerangka awal dari menciptakan karya fashion dan sebagai ruang untuk memotong bahan. Terletak di lantai 1.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/lab-fashion-design-mode-idb.jpg",
+    "imageWidth": 800,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/lab-fashion-design-mode-idb.jpg"
+  },
+  {
+    "slug": "studio-foto",
+    "title": "Studio Foto",
+    "description": "Studio ini dipergunakan untuk fotografi maupun videografi, dimana terdapat backgound dan property penunjang. Studio ini dapat dipergunakan oleh seluruh program studi di IDB Bali sebagai penunjang belajar mengajar. Studio ini terletak di lantai 1.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2024/05/studio-foto-idb-new.jpg",
+    "imageWidth": 800,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2024/05/studio-foto-idb-new.jpg"
+  },
+  {
+    "slug": "lobby",
+    "title": "Lobby",
+    "description": "Tempat untuk bersantai mahasiswa maupun sebagai ruang tunggu, berkonsultasi atau menemukan jawaban karena pada Lobby IDB Bali juga berisi Customer Service yang siap melayani para mahasiswa maupun calon mahasiswa. Lobby terletak di lantai 1.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/lobby-idb-bali.jpg",
+    "imageWidth": 800,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2022/12/lobby-idb-bali.jpg"
+  },
+  {
+    "slug": "ruang-stib",
+    "title": "Lab Software Development",
+    "description": "Lab Software Development adalah fasilitas modern yang dirancang untuk mendukung aktivitas belajar mahasiswa di bidang teknologi informasi dan bisnis. Ruangan ini dilengkapi dengan komputer berperforma tinggi yang terhubung ke jaringan internet cepat, menyediakan akses ke perangkat lunak terbaru yang relevan dengan mata kuliah terkait sistem informasi. Ruangannya luas, nyaman, serta memiliki suasana yang mendukung produktivitas, dengan pencahayaan yang baik dan tata letak ergonomis. Mahasiswa dapat memanfaatkannya untuk kegiatan praktikum, penelitian, serta pengembangan proyek-proyek teknologi.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2024/10/ruang-lab-stib.jpg",
+    "imageWidth": 1080,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2024/10/ruang-lab-stib.jpg"
+  },
+  {
+    "slug": "ruang-kelas-magister",
+    "title": "Ruang Kelas Magister",
+    "description": "Tempat ideal bagi mahasiswa Program Magister untuk menjalankan perkuliahan dengan nyaman dan fokus. Ruangan ini dirancang khusus untuk mendukung suasana belajar yang kondusif, dengan fasilitas modern yang menunjang aktivitas akademik. Selain digunakan untuk perkuliahan tatap muka, ruang ini juga dilengkapi dengan kamera dan peralatan digital yang memadai, sehingga perkuliahan daring (online) bisa berjalan lancar. Mahasiswa dapat mengikuti perkuliahan jarak jauh dengan kualitas yang sama baiknya, tanpa kehilangan interaksi dan diskusi dengan dosen.",
+    "image": "https://www.idbbali.ac.id/wp-content/uploads/2024/10/462893-Small.jpg",
+    "imageWidth": 596,
+    "fallbackImage": "https://www.idbbali.ac.id/wp-content/uploads/2024/10/462893-Small.jpg"
+  }
+]
